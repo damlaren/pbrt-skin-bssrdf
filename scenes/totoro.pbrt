@@ -1,0 +1,46 @@
+Scale -1 1 1
+LookAt 18 6.0 2    15.5 .9 10   0 1 0
+Camera "perspective" "float fov" [25]
+
+Sampler "lowdiscrepancy" "integer pixelsamples" [4]
+PixelFilter "box"
+
+Film "image" "integer xresolution" [250] "integer yresolution" [250] "string filename" ["totoro.exr"]
+
+SurfaceIntegrator "dipolesubsurface" "float minsampledistance" [.1]
+    "float maxerror" [.05]
+
+WorldBegin
+
+# lights
+AttributeBegin
+Rotate 90 1 0 0 
+    LightSource "infinite" "integer nsamples" [32] "color L" [8 8 8]
+        "string mapname" ["textures/grace_latlong.exr"]#skylight-sunset.exr"]
+AttributeEnd
+
+#floor
+#Texture "tmap" "color" "imagemap" "string filename" "textures/Face_Color.tga"
+Texture "tmap" "color" "imagemap" "string filename" "textures/lines.exr"
+	"float uscale" 6 "float vscale" 6
+Texture "tbump-tex" "float" "imagemap" "string filename" "textures/lines.exr"
+	"float uscale" 6 "float vscale" 6
+Texture "sbump" "float" "scale" "texture tex1" "tbump-tex"
+	"float  tex2" [-.25]
+Material "substrate" "texture Kd" "tmap" 
+	 "color Ks" [.5 .5 .5] "float uroughness" [.05]
+	"float vroughness" [.05]
+	"texture bumpmap" "sbump" 
+Translate 15 0 10
+Shape "trianglemesh" "integer indices" [0 1 2 0 3 2 ]
+    "point P" [ -10 0 -10  10 0 -10   10 0 10   -10 0 10 ]
+
+AttributeBegin
+Material "subsurface" "color sigma_a" [ .05 .05 .05]
+    "color sigma_prime_s" [3 3 3]
+Translate 1 1 1
+Scale .025 .025 .025
+Include "geometry/totoro.pbrt"
+AttributeEnd
+
+WorldEnd

@@ -1,0 +1,58 @@
+Scale -1 1 1
+LookAt 18 6.0 2    15.5 .9 10   0 1 0
+Camera "perspective" "float fov" [25]
+
+Sampler "lowdiscrepancy" "integer pixelsamples" [4]
+PixelFilter "box"
+
+Film "image" "integer xresolution" [250] "integer yresolution" [250] "string filename" ["ss-small-dipole.exr"]
+
+SurfaceIntegrator "dipolesubsurface" "float minsampledistance" [.1] "float maxerror" [.05]
+#SurfaceIntegrator "pbdsubsurface" "float minsampledistance" [.1] "float maxerror" [.05]
+
+WorldBegin
+
+# lights
+AttributeBegin
+Rotate 90 1 0 0 
+    LightSource "infinite" "integer nsamples" [32] "color L" [8 8 8]
+        "string mapname" ["textures/grace_latlong.exr"]#skylight-sunset.exr"]
+AttributeEnd
+
+AttributeBegin
+  AreaLightSource "diffuse" "rgb L" [ 1785 1029 287 ]
+  Translate 15 0 10
+  Translate 0.5 2 -2.1
+  Shape "sphere" "float radius" [.05]
+AttributeEnd
+
+AttributeBegin
+  Translate 15 0 10
+  Translate 2 2 -2
+  LightSource "point" "color I" [2 2 2] "point from" [0 0 0]
+AttributeEnd
+
+#floor
+Texture "tmap" "color" "imagemap" "string filename" "textures/lines.exr"
+	"float uscale" 6 "float vscale" 6
+Texture "tbump-tex" "float" "imagemap" "string filename" "textures/lines.exr"
+	"float uscale" 6 "float vscale" 6
+Texture "sbump" "float" "scale" "texture tex1" "tbump-tex"
+	"float  tex2" [-.25]
+Material "substrate" "texture Kd" "tmap" 
+	 "color Ks" [.5 .5 .5] "float uroughness" [.05]
+	"float vroughness" [.05]
+	"texture bumpmap" "sbump" 
+Translate 15 0 10
+Shape "trianglemesh" "integer indices" [0 1 2 0 3 2 ]
+    "point P" [ -10 0 -10  10 0 -10   10 0 10   -10 0 10 ]
+
+AttributeBegin
+Material "skin" "color sigma_a" [ .05 1.0 .95]
+    "color sigma_prime_s" [2 1 0.5] "oil" 1.0
+#Translate 15 0 10
+Scale 1.25 1.25 1.25
+Include "geometry/room-teapot.pbrt"
+AttributeEnd
+
+WorldEnd

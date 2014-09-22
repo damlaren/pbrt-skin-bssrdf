@@ -1,0 +1,60 @@
+Scale -1 1 1
+LookAt 18 6.0 2    15.5 .9 10   0 1 0
+#LookAt 1 1 10    0 0 -1   0 1 0
+Camera "perspective" "float fov" [25]
+
+Sampler "lowdiscrepancy" "integer pixelsamples" [4]
+PixelFilter "box"
+
+Film "image" "integer xresolution" [200] "integer yresolution" [200] "string filename" ["eartest.exr"]
+
+#SurfaceIntegrator "dipolesubsurface" "float minsampledistance" [.1] "float maxerror" [.15]
+SurfaceIntegrator "pbdsubsurface" "float minsampledistance" [.1] "float maxerror" [.15]
+
+WorldBegin
+
+# lights
+AttributeBegin
+Rotate 90 1 0 0 
+    LightSource "infinite" "integer nsamples" [32] "color L" [8 8 8] "string mapname" ["textures/skylight-sunset.exr"]#textures/grace_latlong.exr"]
+AttributeEnd
+
+#floor
+#AttributeBegin
+#Texture "tmap" "color" "imagemap" "string filename" "textures/lines.exr"
+#	"float uscale" 6 "float vscale" 6
+#Texture "tbump-tex" "float" "imagemap" "string filename" "textures/lines.exr"
+#	"float uscale" 6 "float vscale" 6
+#Texture "sbump" "float" "scale" "texture tex1" "tbump-tex"
+#	"float  tex2" [-.25]
+#Material "substrate" "texture Kd" "tmap" 
+#	 "color Ks" [.5 .5 .5] "float uroughness" [.05]
+#	"float vroughness" [.05]
+#	"texture bumpmap" "sbump" 
+#Translate 15 0 10
+#Shape "trianglemesh" "integer indices" [0 1 2 0 3 2 ]
+#    "point P" [ -10 0 -10  10 0 -10   10 0 10   -10 0 10 ]
+#AttributeEnd
+
+AttributeBegin
+#Material "subsurface" "color sigma_a" [ .05 .05 .05] "color sigma_prime_s" [3 3 3]
+#Material "kdsubsurface" "color Kd" [ .2 .5 .7 ] "float meanfreepath" [.1]
+#Texture "obj-kd" "color" "constant" "color value" [0.640000 0.640000 0.640000]
+#Material "uber" "texture Kd" "obj-kd" "texture Ks" "obj-ks" "float roughness" [0.010408] "rgb Kt" [0.000000 0.000000 0.000000] "float index" [1.000000] "rgb opacity" [0.5 0.5 0.5] 
+#Material "subsurface" "color sigma_a" [ .02 .07 .07] "color sigma_prime_s" [6 5 4.5]
+#Material "subsurface" "color sigma_a" [ 0 1 .988] "color sigma_prime_s" [2 1 0.5]
+
+#Texture "mydiffuse" "spectrum" "imagemap" "string filename" "textures/Face_Color.tga"
+Material "skin" "color sigma_a" [ 0 1 .988] "color sigma_prime_s" [2 1 0.5] "float oiliness" 1.00 "float index" [1.44]
+
+#Material "skin" "color sigma_a" [0.216 0.313 0.503] "color sigma_prime_s" [2 1 0.5] "float index" 1.333 
+
+Translate 15 0 10
+Translate 1.25 1.5 -2
+Scale 5 5 5
+Rotate 90 0 1 0
+#Include "geometry/earWithNormals.pbrt"
+Include "geometry/headscan3.pbrt"
+AttributeEnd
+
+WorldEnd

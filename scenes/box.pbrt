@@ -1,0 +1,30 @@
+Scale -1 1 1
+LookAt 18 6.0 2    15.5 .9 10   0 1 0
+Camera "perspective" "float fov" [40]
+
+Sampler "lowdiscrepancy" "integer pixelsamples" [4]
+PixelFilter "box"
+
+Film "image" "integer xresolution" [100] "integer yresolution" [100] "string filename" ["box.exr"]
+
+SurfaceIntegrator "dipolesubsurface" "float minsampledistance" [.1]
+    "float maxerror" [.05]
+
+WorldBegin
+
+# lights
+AttributeBegin
+Rotate 90 1 0 0 
+    LightSource "infinite" "integer nsamples" [32] "color L" [8 8 8]
+        "string mapname" ["textures/grace_latlong.exr"]#skylight-sunset.exr"]
+AttributeEnd
+
+AttributeBegin
+Material "subsurface" "color sigma_a" [ .05 .05 .05]
+    "color sigma_prime_s" [3 3 3]
+Translate 15 0 10
+Rotate 90 1 0 0
+Include "geometry/box.pbrt"
+AttributeEnd
+
+WorldEnd

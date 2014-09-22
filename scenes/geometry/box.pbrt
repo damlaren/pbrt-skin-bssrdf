@@ -1,0 +1,38 @@
+# Converted from "/home/dmclaren/Desktop/box.obj" by obj2pbrt
+# Scene bounds: (-1.000000, -1.000000, -1.000000) - (1.000000, 1.000000, 1.000001)
+
+
+# Name "Cube"
+AttributeBegin
+Texture "obj-kd" "color" "constant" "color value" [0.000000 0.000000 0.000000]
+Texture "obj-ks" "color" "constant" "color value" [0.000000 0.000000 0.000000]
+Material "uber" "texture Kd" "obj-kd" "texture Ks" "obj-ks" "float roughness" [0.000000] "rgb Kt" [0.000000 0.000000 0.000000] "float index" [0.000000] "rgb opacity" [0.000000 0.000000 0.000000] 
+
+Shape "trianglemesh"
+  "point P" [
+    1 -1 -1 
+    1 -1 1 
+    -1 -1 1 
+    -1 -1 -1 
+    1 1 -0.9999989867 
+    -1 1 -1 
+    -1 1 1 
+    0.9999989867 1 1.000000954 
+    ]
+  "integer indices" [
+    0 1 2 
+    0 2 3 
+    4 5 6 
+    4 6 7 
+    0 4 7 
+    0 7 1 
+    1 7 6 
+    1 6 2 
+    2 6 5 
+    2 5 3 
+    4 0 3 
+    4 3 5 
+    ]
+AttributeEnd
+
+
