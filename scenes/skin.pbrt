@@ -6,22 +6,24 @@ Camera "perspective" "float fov" [25]
 Sampler "lowdiscrepancy" "integer pixelsamples" [4]
 PixelFilter "box"
 
-Film "image" "integer xresolution" [1600] "integer yresolution" [1600] "string filename" ["skin.exr"]
+Film "image" "integer xresolution" [400] "integer yresolution" [400] "string filename" ["skin.exr"]
 
 #SurfaceIntegrator "dipolesubsurface" "float minsampledistance" [.1] "float maxerror" [.15]
 #SurfaceIntegrator "pbdsubsurface" "float minsampledistance" [.1] "float maxerror" [.15]
 
 #DJ2006 skin models
-#SurfaceIntegrator "skinsubsurface" "float minsampledistance" [.1] "float maxerror" [.15] "float Cm" [0.013] "float Bm" [0.0] "float Ch" [0.04] "float rho" [0.3] #white
-#SurfaceIntegrator "skinsubsurface" "float minsampledistance" [.1] "float maxerror" [.15] "float Cm" [0.053] "float Bm" [0.0] "float Ch" [0.01] "float rho" [0.3] #asian
-SurfaceIntegrator "skinsubsurface" "float minsampledistance" [.1] "float maxerror" [.15] "float Cm" [0.60] "float Bm" [1.0] "float Ch" [0.01] "float rho" [0.3] #black
+SurfaceIntegrator "skinsubsurface" "float minsampledistance" [.1] "float maxerror" [.15] "float Cm" [0.005] "float Bm" [0.7] "float Ch" [0.005] "float rho" [0.3] #white
+#SurfaceIntegrator "skinsubsurface" "float minsampledistance" [.1] "float maxerror" [.15] "float Cm" [0.15] "float Bm" [0.0] "float Ch" [0.01] "float rho" [0.3] #asian
+#SurfaceIntegrator "skinsubsurface" "float minsampledistance" [.1] "float maxerror" [.15] "float Cm" [0.50] "float Bm" [0.7] "float Ch" [0.05] "float rho" [0.3] #black
 
 WorldBegin
 
 # lights
 AttributeBegin
-Rotate 90 1 0 0 
-    LightSource "infinite" "integer nsamples" [32] "color L" [8 8 12] "string mapname" ["textures/skylight-sunset.exr"]#textures/grace_latlong.exr"]
+    LightSource "distant" "integer nsamples" [32] "color L" [2 2 2]
+    Translate 20 0 20
+    LightSource "infinite" "integer nsamples" [32] "color L" [2 2 2]
+    
 AttributeEnd
 
 #floor
