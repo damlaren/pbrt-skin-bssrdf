@@ -59,8 +59,8 @@ ifeq ($(ARCH),Darwin)
   EXRLIBS += -lz
 endif
 
-CC=gcc
-CXX=g++
+CC=gcc-4.9
+CXX=g++-4.9
 LD=$(CXX) $(OPT) $(MARCH)
 INCLUDE=-I. -Icore $(EXR_INCLUDES) $(TIFF_INCLUDES)
 WARN=-Wall

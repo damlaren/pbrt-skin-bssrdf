@@ -822,6 +822,7 @@ struct DiffusionReflectance {
       memset(R, 0, sizeof(R));
       for (int i = 0; i < N_R; i++) {
 	R[i] = REpiPos[i] + trans1[i] + trans2[i];
+        //R[i] = trans1[i] + trans2[i];
 	R[i] = R[i].Clamp(0, 0.5);
       }
 

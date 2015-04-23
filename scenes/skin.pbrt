@@ -11,10 +11,11 @@ Film "image" "integer xresolution" [400] "integer yresolution" [400] "string fil
 #SurfaceIntegrator "dipolesubsurface" "float minsampledistance" [.1] "float maxerror" [.15]
 #SurfaceIntegrator "pbdsubsurface" "float minsampledistance" [.1] "float maxerror" [.15]
 
-#DJ2006 skin models
-SurfaceIntegrator "skinsubsurface" "float minsampledistance" [.1] "float maxerror" [.15] "float Cm" [0.005] "float Bm" [0.7] "float Ch" [0.005] "float rho" [0.3] #white
-#SurfaceIntegrator "skinsubsurface" "float minsampledistance" [.1] "float maxerror" [.15] "float Cm" [0.15] "float Bm" [0.0] "float Ch" [0.01] "float rho" [0.3] #asian
-#SurfaceIntegrator "skinsubsurface" "float minsampledistance" [.1] "float maxerror" [.15] "float Cm" [0.50] "float Bm" [0.7] "float Ch" [0.05] "float rho" [0.3] #black
+# DJ2006 skin models
+# Need to use small minsampledistance to prevent a "blotchy" look on skin.
+#SurfaceIntegrator "skinsubsurface" "float minsampledistance" [.02] "float maxerror" [.15] "float Cm" [0.005] "float Bm" [0.7] "float Ch" [0.005] "float rho" [0.3] #white
+#SurfaceIntegrator "skinsubsurface" "float minsampledistance" [.02] "float maxerror" [.15] "float Cm" [0.15] "float Bm" [0.0] "float Ch" [0.01] "float rho" [0.3] #asian
+SurfaceIntegrator "skinsubsurface" "float minsampledistance" [.02] "float maxerror" [.15] "float Cm" [0.50] "float Bm" [0.7] "float Ch" [0.05] "float rho" [0.3] #black
 
 WorldBegin
 
