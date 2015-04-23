@@ -1,21 +1,18 @@
 Scale -1 1 1
-LookAt 18 6.0 2    15.5 .9 10   0 1 0
+LookAt 0 0 0   0 -5 8   0 1 0
 #LookAt 1 1 10    0 0 -1   0 1 0
 Camera "perspective" "float fov" [25]
 
-Sampler "lowdiscrepancy" "integer pixelsamples" [4]
+Sampler "lowdiscrepancy" "integer pixelsamples" [16]
 PixelFilter "box"
 
-Film "image" "integer xresolution" [400] "integer yresolution" [400] "string filename" ["skin.exr"]
-
-#SurfaceIntegrator "dipolesubsurface" "float minsampledistance" [.1] "float maxerror" [.15]
-#SurfaceIntegrator "pbdsubsurface" "float minsampledistance" [.1] "float maxerror" [.15]
+Film "image" "integer xresolution" [1600] "integer yresolution" [1600] "string filename" ["skin.exr"]
 
 # DJ2006 skin models
 # Need to use small minsampledistance to prevent a "blotchy" look on skin.
-SurfaceIntegrator "skinsubsurface" "float minsampledistance" [.15] "float maxerror" [.15] "float Cm" [0.005] "float Bm" [0.7] "float Ch" [0.005] "float rho" [0.0] #white
-#SurfaceIntegrator "skinsubsurface" "float minsampledistance" [.02] "float maxerror" [.15] "float Cm" [0.15] "float Bm" [0.0] "float Ch" [0.01] "float rho" [0.0] #asian
-#SurfaceIntegrator "skinsubsurface" "float minsampledistance" [.02] "float maxerror" [.15] "float Cm" [0.50] "float Bm" [0.7] "float Ch" [0.05] "float rho" [0.0] #black
+SurfaceIntegrator "skinsubsurface" "float minsampledistance" [.15] "float maxerror" [.15] "float Cm" [0.005] "float Bm" [0.7] "float Ch" [0.005] "float rho" [0.3] #white
+#SurfaceIntegrator "skinsubsurface" "float minsampledistance" [.02] "float maxerror" [.15] "float Cm" [0.15] "float Bm" [0.0] "float Ch" [0.01] "float rho" [0.3] #asian
+SurfaceIntegrator "skinsubsurface" "float minsampledistance" [.01] "float maxerror" [.15] "float Cm" [0.50] "float Bm" [0.7] "float Ch" [0.05] "float rho" [0.1] #black
 
 WorldBegin
 
@@ -25,7 +22,11 @@ AttributeBegin
     LightSource "distant" "integer nsamples" [32] "color L" [1 1 1] "point from" [1 1 0] "point to" [-1 .8 1]
     LightSource "distant" "integer nsamples" [32] "color L" [1 1 1] "point from" [-1 1 0] "point to" [1 .8 1]
     LightSource "distant" "integer nsamples" [32] "color L" [1 1 1] "point from" [0 0 1] "point to" [0 1 0]
-    LightSource "infinite" "integer nsamples" [32] "color L" [1 1 1]
+    LightSource "distant" "integer nsamples" [32] "color L" [1 1 1] "point from" [0 0 0] "point to" [2 0 1]
+    LightSource "distant" "integer nsamples" [32] "color L" [1 1 1] "point from" [0 0 0] "point to" [0 -1 1]
+    LightSource "distant" "integer nsamples" [32] "color L" [1 1 1] "point from" [0 0 0] "point to" [0 0 1]
+    LightSource "point" "color I" [50.0 50.0 50.0] "point from" [-4 -5 4]
+    LightSource "infinite" "integer nsamples" [32] "color L" [0.5 0.5 0.5]
 AttributeEnd
 
 #floor
@@ -58,10 +59,10 @@ AttributeBegin
 Texture "facetex" "spectrum" "imagemap" "string filename" "textures/Face_Color.tga"
 Material "skindj" "float index" [1.4] "texture skintex" "facetex"
 
-Translate 15 0 10
-Translate 0.75 0.25 -2
+Translate 0 -6.5 7
+#Translate 0.75 0.25 -2
 Scale 7 7 7
-Rotate 180 0 1 0
+Rotate 170 0 1 0
 Include "geometry/headscan3.pbrt"
 AttributeEnd
 

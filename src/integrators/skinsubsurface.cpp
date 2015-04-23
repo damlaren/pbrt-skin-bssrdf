@@ -1034,12 +1034,11 @@ Spectrum SkinSubsurfaceIntegrator::Li(const Scene *scene, const Renderer *render
 					       lightSampleOffsets,
 					       bsdfSampleOffsets);
 
-    // Add it all together. Don't let specular component
-    // overwhelm diffuse. We just want the highlights.
+    // Add it all together. 
     //L = LSpec + LScatter;
-    L = LScatter * LDiffuse; // rhodr is reflected right away by oil film, LScatter is modulated
-    //L += (LSpec - L).Clamp(0, 1);
-    L += LSpec;
+    L = LScatter * LDiffuse; // fraction rho_dr is reflected right away by oil film, LScatter is modulated
+    L += (LSpec - L).Clamp(0, 1); // Don't let specular component overwhelm diffuse. We just want the highlights.
+    //L += LSpec;
 
     if (ray.depth < maxSpecularDepth) {
       // Trace rays for specular reflection and refraction.
