@@ -13,18 +13,19 @@ Film "image" "integer xresolution" [400] "integer yresolution" [400] "string fil
 
 # DJ2006 skin models
 # Need to use small minsampledistance to prevent a "blotchy" look on skin.
-#SurfaceIntegrator "skinsubsurface" "float minsampledistance" [.02] "float maxerror" [.15] "float Cm" [0.005] "float Bm" [0.7] "float Ch" [0.005] "float rho" [0.3] #white
-#SurfaceIntegrator "skinsubsurface" "float minsampledistance" [.02] "float maxerror" [.15] "float Cm" [0.15] "float Bm" [0.0] "float Ch" [0.01] "float rho" [0.3] #asian
-SurfaceIntegrator "skinsubsurface" "float minsampledistance" [.02] "float maxerror" [.15] "float Cm" [0.50] "float Bm" [0.7] "float Ch" [0.05] "float rho" [0.3] #black
+SurfaceIntegrator "skinsubsurface" "float minsampledistance" [.15] "float maxerror" [.15] "float Cm" [0.005] "float Bm" [0.7] "float Ch" [0.005] "float rho" [0.0] #white
+#SurfaceIntegrator "skinsubsurface" "float minsampledistance" [.02] "float maxerror" [.15] "float Cm" [0.15] "float Bm" [0.0] "float Ch" [0.01] "float rho" [0.0] #asian
+#SurfaceIntegrator "skinsubsurface" "float minsampledistance" [.02] "float maxerror" [.15] "float Cm" [0.50] "float Bm" [0.7] "float Ch" [0.05] "float rho" [0.0] #black
 
 WorldBegin
 
 # lights
 AttributeBegin
-    LightSource "distant" "integer nsamples" [32] "color L" [2 2 2]
-    Translate 20 0 20
-    LightSource "infinite" "integer nsamples" [32] "color L" [2 2 2]
-    
+    LightSource "distant" "integer nsamples" [32] "color L" [1 1 1] "point from" [0 1 0] "point to" [0 .8 1]
+    LightSource "distant" "integer nsamples" [32] "color L" [1 1 1] "point from" [1 1 0] "point to" [-1 .8 1]
+    LightSource "distant" "integer nsamples" [32] "color L" [1 1 1] "point from" [-1 1 0] "point to" [1 .8 1]
+    LightSource "distant" "integer nsamples" [32] "color L" [1 1 1] "point from" [0 0 1] "point to" [0 1 0]
+    LightSource "infinite" "integer nsamples" [32] "color L" [1 1 1]
 AttributeEnd
 
 #floor

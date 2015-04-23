@@ -567,6 +567,7 @@ Spectrum SigmaTEpi(const float Cm, const float Bm, const Spectrum &l) {
 }
 
 Spectrum DiffusionCoefficient(const Spectrum &sigmaA, const Spectrum &sigmaSPrime) {
+  //TODO: Actually don't recall where this expression for D comes from. It's usually 1 / (3 * sigma_t_prime)
   return Spectrum(1.0f) / (sigmaSPrime * 3.0f + sigmaA);
 }
 
@@ -723,6 +724,23 @@ struct DiffusionReflectance {
   static void EvaluateMultipole(float etaTop, float etaBot, int nPoles, float slabThickness, float r, Spectrum sigmaA,
 				Spectrum sigmaSPrime, Spectrum &Rsum, Spectrum &Tsum)
   {
+    // sanity check: see if the dipole approximation matches... and it seems it does.
+    /*
+    Spectrum sigmaTPrime = sigmaA + sigmaSPrime;
+    Spectrum str = Sqrt(sigmaA * sigmaTPrime * 3.0f);
+    Spectrum alphaPrime = sigmaSPrime / sigmaTPrime;
+    Spectrum zpos = Spectrum(1.f) / sigmaTPrime;
+    Spectrum A = CalcA(etaTop);
+    //Spectrum zneg = -(zpos + 4 * A * D);
+    Spectrum zneg = (Spectrum(1.0f) + (4.0f / 3.0f) * A) / sigmaTPrime;
+    Spectrum dpos = Sqrt(Spectrum(r * r) + zpos * zpos);
+    Spectrum dneg = Sqrt(Spectrum(r * r) + zneg * zneg);
+    Spectrum dppos = (str * dpos + 1.0f) * Exp(-str * dpos) / (sigmaTPrime * Pow(dpos, 3));
+    Spectrum dpneg = zneg * (str * dneg + 1.0f) * Exp(-str * dneg) / (sigmaTPrime * Pow(dneg, 3));
+    Rsum = alphaPrime / (4.0f * M_PI) * (dppos + dpneg);
+    Tsum = 0;
+    */
+
     Spectrum sigmaTPrime = sigmaA + sigmaSPrime;
     Spectrum str = Sqrt(3.0f * sigmaA * sigmaTPrime); // effective transport coefficient
     Spectrum alphaPrime = sigmaSPrime / sigmaTPrime;
@@ -823,7 +841,8 @@ struct DiffusionReflectance {
       for (int i = 0; i < N_R; i++) {
 	R[i] = REpiPos[i] + trans1[i] + trans2[i];
         //R[i] = trans1[i] + trans2[i];
-	R[i] = R[i].Clamp(0, 0.5);
+        //R[i] = REpiPos[i];
+	R[i] = R[i].Clamp(0, 1.0);
       }
 
       // Compute total diffuse reflectance
@@ -1087,7 +1106,7 @@ SkinSubsurfaceIntegrator *CreateSkinSubsurfaceIntegrator(const ParamSet &params)
 
     
 
-    DiffusionReflectance::BuildProfile(Cm, Bm, Ch, rho, 1.4f, c, 20, 0.25f);
+    DiffusionReflectance::BuildProfile(Cm, Bm, Ch, rho, 1.4f, c, 0, 0.25f);
     
     return new SkinSubsurfaceIntegrator(maxDepth, maxError, minDist, Cm, Bm, Ch, rho, pointsfile);
 }
